@@ -25,18 +25,17 @@
       padding: 20px;
       display: flex;
       justify-content: center;
+      min-height: 100vh;
     }
 
     .container {
       width: 100%;
-      max-width: 900px;
+      max-width: 1000px;
       background: var(--panel);
       border-radius: 20px;
       padding: 22px;
       border: 1px solid rgba(56, 189, 248, 0.25);
-      box-shadow:
-        0 0 40px rgba(56, 189, 248, 0.25),
-        0 0 60px rgba(236, 72, 153, 0.18);
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.18);
       position: relative;
       overflow: hidden;
     }
@@ -46,9 +45,9 @@
       position: absolute;
       inset: -40%;
       background:
-        radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.18), transparent 55%),
-        radial-gradient(circle at 100% 0%, rgba(236, 72, 153, 0.16), transparent 55%);
-      opacity: 0.7;
+        radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.12), transparent 55%),
+        radial-gradient(circle at 100% 0%, rgba(236, 72, 153, 0.10), transparent 55%);
+      opacity: 0.6;
       pointer-events: none;
     }
 
@@ -72,18 +71,18 @@
       color: var(--muted);
     }
 
-    .ad-box {
-      border: 1px dashed rgba(148, 163, 184, 0.5);
-      border-radius: var(--radius);
-      padding: 10px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.8rem;
-      margin: 16px 0;
-      background: rgba(15, 23, 42, 0.6);
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
       position: relative;
       z-index: 2;
+      align-items: start;
     }
+
+    .col { min-width: 0; }
+
+    .field { margin-bottom: 14px; }
 
     label {
       font-size: 0.9rem;
@@ -92,57 +91,136 @@
       display: block;
     }
 
+    .req { color: var(--accent-pink); }
+
+    input,
     textarea {
       width: 100%;
-      min-height: 140px;
       border-radius: var(--radius);
       border: 1px solid rgba(56, 189, 248, 0.35);
       background: rgba(15, 23, 42, 0.9);
       color: var(--text);
-      padding: 12px;
+      padding: 10px 12px;
+      font: inherit;
       font-size: 0.95rem;
       outline: none;
       resize: vertical;
-      box-shadow: inset 0 0 12px rgba(56, 189, 248, 0.15);
     }
 
-    textarea:focus {
+    textarea { min-height: 84px; }
+
+    input:focus,
+    textarea:focus,
+    button:focus-visible {
       border-color: var(--accent-blue);
-      box-shadow:
-        0 0 12px rgba(56, 189, 248, 0.4),
-        0 0 24px rgba(236, 72, 153, 0.25);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.35);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
     }
 
     button {
-      width: 100%;
-      margin-top: 14px;
-      padding: 12px;
+      flex: 1;
+      padding: 11px 12px;
       border-radius: var(--radius);
       border: none;
-      font-size: 1rem;
+      font: inherit;
+      font-size: 0.95rem;
       font-weight: 600;
       cursor: pointer;
       background: linear-gradient(135deg, var(--accent-blue), var(--accent-pink));
       color: #0b1120;
-      box-shadow:
-        0 0 20px rgba(56, 189, 248, 0.8),
-        0 0 30px rgba(236, 72, 153, 0.5);
+      box-shadow: 0 0 14px rgba(56, 189, 248, 0.45);
     }
 
-    button:active {
-      transform: translateY(1px);
+    button.secondary {
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: none;
+    }
+
+    button:active { transform: translateY(1px); }
+
+    .hint {
+      color: var(--accent-pink);
+      font-size: 0.85rem;
+      min-height: 1.2em;
+      margin-top: 8px;
     }
 
     .output-box {
-      margin-top: 16px;
-      min-height: 140px;
+      min-height: 260px;
       border-radius: var(--radius);
       border: 1px solid rgba(236, 72, 153, 0.35);
       background: rgba(15, 23, 42, 0.9);
       padding: 12px;
       font-size: 0.95rem;
       white-space: pre-wrap;
-      box-shadow: inset 0 0 12px rgba(236, 72, 153, 0.15);
+      word-break: break-word;
+      color: var(--text);
+    }
+
+    .output-box:empty::before {
+      content: attr(data-placeholder);
+      color: var(--muted);
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-top: 6px;
+      min-height: 1.1em;
+    }
+
+    .ad-box {
+      border: 1px dashed rgba(148, 163, 184, 0.5);
+      border-radius: var(--radius);
+      padding: 10px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-top: 18px;
+      background: rgba(15, 23, 42, 0.6);
+      position: relative;
+      z-index: 2;
+    }
+
+    .col-title {
+      font-size: 1rem;
+      color: var(--accent-blue);
+      margin-bottom: 12px;
+      letter-spacing: 0.05em;
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        transition: none !important;
+        animation: none !important;
+      }
+      button:active { transform: none; }
     }
   </style>
 </head>
@@ -154,35 +232,230 @@
       <div class="subtitle">Make AI Perform at Its Best</div>
     </header>
 
-    <div class="ad-box">Top AdSense Banner Placeholder</div>
+    <div class="grid">
+      <section class="col" aria-label="Prompt fields">
+        <h2 class="col-title">Build your prompt</h2>
 
-    <label for="input">Enter your prompt</label>
-    <textarea id="input" placeholder="Type or paste your prompt here..."></textarea>
+        <div class="field">
+          <label for="role">Role</label>
+          <input id="role" type="text" placeholder="e.g. Senior copywriter" autocomplete="off" />
+        </div>
 
-    <button onclick="optimizePrompt()">Optimize Prompt</button>
+        <div class="field">
+          <label for="task">Task <span class="req" aria-hidden="true">*</span></label>
+          <textarea id="task" placeholder="e.g. Write a launch email for our new app" required aria-required="true"></textarea>
+        </div>
 
-    <label style="margin-top:16px;">Optimized Prompt</label>
-    <div id="output" class="output-box">Your optimized prompt will appear here.</div>
+        <div class="field">
+          <label for="context">Context</label>
+          <textarea id="context" placeholder="Background, audience, prior work..."></textarea>
+        </div>
 
-    <div class="ad-box">Bottom AdSense Banner Placeholder</div>
+        <div class="field">
+          <label for="constraints">Constraints</label>
+          <textarea id="constraints" placeholder="Length, things to avoid, must-haves..."></textarea>
+        </div>
+
+        <div class="field">
+          <label for="format">Output format</label>
+          <input id="format" type="text" placeholder="e.g. Markdown with bullet points" autocomplete="off" />
+        </div>
+
+        <div class="field">
+          <label for="tone">Tone</label>
+          <input id="tone" type="text" placeholder="e.g. Friendly and confident" autocomplete="off" />
+        </div>
+
+        <div class="actions">
+          <button type="button" id="copyBtn" aria-describedby="copyStatus">Copy prompt</button>
+          <button type="button" id="clearBtn" class="secondary">Clear</button>
+        </div>
+        <p id="copyStatus" class="visually-hidden" role="status" aria-live="polite"></p>
+      </section>
+
+      <section class="col" aria-label="Generated prompt">
+        <h2 class="col-title">Preview</h2>
+        <div id="output" class="output-box" role="region" aria-live="polite" aria-label="Generated prompt preview" tabindex="0" data-placeholder="Your generated prompt will appear here."></div>
+        <p id="hint" class="hint" role="status" aria-live="polite"></p>
+        <div class="meta">
+          <span id="count"></span>
+          <span id="tokens"></span>
+        </div>
+      </section>
+    </div>
+
+    <div class="ad-box">AdSense Banner Placeholder</div>
   </div>
 
   <script>
-    function optimizePrompt() {
-      const text = document.getElementById("input").value.trim();
-      const output = document.getElementById("output");
+    (function () {
+      "use strict";
 
-      if (!text) {
-        output.textContent = "Please enter a prompt first.";
-        return;
+      var STORAGE_KEY = "prompt-prompt-fields";
+      var ALL_IDS = ["role", "task", "context", "constraints", "format", "tone"];
+
+      var output = document.getElementById("output");
+      var hint = document.getElementById("hint");
+      var count = document.getElementById("count");
+      var tokens = document.getElementById("tokens");
+      var copyStatus = document.getElementById("copyStatus");
+
+      function readFields() {
+        var values = {};
+        ALL_IDS.forEach(function (id) {
+          var el = document.getElementById(id);
+          values[id] = el ? el.value.trim() : "";
+        });
+        return values;
       }
 
-      const improved =
-        "Rewrite the following prompt to be clearer, more detailed, and optimized for high‑performance AI output:\n\n" +
-        text;
+      function buildPrompt(values) {
+        var sections = [
+          ["Role", values.role],
+          ["Task", values.task],
+          ["Context", values.context],
+          ["Constraints", values.constraints],
+          ["Output format", values.format],
+          ["Tone", values.tone]
+        ];
 
-      output.textContent = improved;
-    }
+        var parts = [];
+        sections.forEach(function (section) {
+          var body = (section[1] || "").trim();
+          if (!body) return;
+          parts.push(section[0] + ": " + body);
+        });
+
+        return parts.join("\n\n");
+      }
+
+      function update() {
+        var values = readFields();
+        var prompt = buildPrompt(values);
+
+        if (values.task) {
+          hint.textContent = "";
+        } else {
+          hint.textContent = "Please enter a Task to generate a prompt.";
+        }
+
+        output.textContent = prompt;
+
+        var chars = prompt.length;
+        var approxTokens = Math.round(chars / 4);
+        count.textContent = chars + " characters";
+        tokens.textContent = "~" + approxTokens + " tokens";
+
+        saveFields(values);
+      }
+
+      function saveFields(values) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(values));
+        } catch (e) {
+          // localStorage unavailable (private mode / file://); ignore.
+        }
+      }
+
+      function restoreFields() {
+        var raw;
+        try {
+          raw = localStorage.getItem(STORAGE_KEY);
+        } catch (e) {
+          return;
+        }
+        if (!raw) return;
+
+        var values;
+        try {
+          values = JSON.parse(raw);
+        } catch (e) {
+          return;
+        }
+        if (!values || typeof values !== "object") return;
+
+        ALL_IDS.forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el && typeof values[id] === "string") {
+            el.value = values[id];
+          }
+        });
+      }
+
+      function copyPrompt() {
+        var text = output.textContent || "";
+        if (!text) {
+          copyStatus.textContent = "Nothing to copy yet.";
+          return;
+        }
+
+        function done() {
+          copyStatus.textContent = "Copied";
+          var original = "Copy prompt";
+          var btn = document.getElementById("copyBtn");
+          btn.textContent = "Copied";
+          setTimeout(function () {
+            btn.textContent = original;
+            copyStatus.textContent = "";
+          }, 1500);
+        }
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done).catch(function () {
+            legacyCopy(text, done);
+          });
+        } else {
+          legacyCopy(text, done);
+        }
+      }
+
+      function legacyCopy(text, done) {
+        try {
+          var temp = document.createElement("textarea");
+          temp.value = text;
+          temp.setAttribute("readonly", "");
+          temp.style.position = "fixed";
+          temp.style.opacity = "0";
+          document.body.appendChild(temp);
+          temp.select();
+          document.execCommand("copy");
+          document.body.removeChild(temp);
+          done();
+        } catch (e) {
+          copyStatus.textContent = "Copy failed. Select the preview manually.";
+        }
+      }
+
+      function clearAll() {
+        ALL_IDS.forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) el.value = "";
+        });
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+        } catch (e) {
+          // ignore
+        }
+        update();
+      }
+
+      ALL_IDS.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener("input", update);
+      });
+
+      document.getElementById("copyBtn").addEventListener("click", copyPrompt);
+      document.getElementById("clearBtn").addEventListener("click", clearAll);
+
+      output.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          output.blur();
+        }
+      });
+
+      restoreFields();
+      update();
+    })();
   </script>
 </body>
 </html>
